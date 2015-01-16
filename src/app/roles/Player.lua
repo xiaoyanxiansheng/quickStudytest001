@@ -1,4 +1,5 @@
 local Progress = import("..commonui.Progress")
+local PhysicsManage = import("..views.PhysicManage")
 local Player = class("Player",function()
     local sprite = display.newSprite("#player1-1-1.png")
     return sprite;
@@ -8,6 +9,8 @@ function Player:ctor()
     self:addStatusMachine()
     -- 添加血量条
     self:addBloodBar()
+    -- 添加碰撞缸体
+    self:addGangti()
 end
 function Player:addAnimation()
     local animationNames = {"walk", "attack", "dead"}
@@ -75,5 +78,10 @@ function Player:doEvent(event)
 end
 function Player:addBloodBar(progress)
     self.progress = progress
+end
+function Player:addGangti()
+    local world = PhysicsManage:getInstance()
+    self.body = world:createBoxBody(1, self:getContentSize().width/2,     self:getContentSize().height)
+    
 end
 return Player

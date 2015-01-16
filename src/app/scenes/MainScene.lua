@@ -76,6 +76,7 @@ function MainScene:addStopButton()
 end
 function MainScene:paush()
     --暂停界面
+    display.pause()
     --显示暂停界面
     local paushLayer = PaushLayer.new()
     self:addChild(paushLayer)
