@@ -80,8 +80,9 @@ function Player:addBloodBar(progress)
     self.progress = progress
 end
 function Player:addGangti()
-    local world = PhysicsManage:getInstance()
-    self.body = world:createBoxBody(1, self:getContentSize().width/2,     self:getContentSize().height)
-    
+    local playerBody = cc.PhysicsBody:createBox(cc.size(self:getContentSize().width/3,self:getContentSize().height),cc.PhysicsMaterial(1,1,0.5))
+    playerBody:setMass(0);
+    playerBody:setRotationEnable(false)
+    self:setPhysicsBody(playerBody)
 end
 return Player

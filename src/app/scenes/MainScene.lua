@@ -2,8 +2,9 @@ local Player = import("..roles.Player")
 local Enemy = import("..roles.Enemy")
 local Progress = import("..commonui.Progress")
 local PaushLayer = import("..views.PaushLayer")
+local scheduler = require("framework.scheduler")
 local MainScene = class("MainScene", function()
-    return display.newScene("MainScene")
+    return display.newPhysicsScene("MainScene")
 end)
 
 function MainScene:ctor()
@@ -31,8 +32,21 @@ function MainScene:ctor()
     
     --加入暂停按钮
     self:addStopButton()
+    
+    --设置世界
+    self.world = self:getPhysicsWorld()
+    self.world:setGravity(cc.p(0, 0))
+    self:getPhysicsWorld():setDebugDrawMask(
+        true and cc.PhysicsWorld.DEBUGDRAW_ALL or cc.PhysicsWorld.DEBUGDRAW_NONE)
+    
+    -- 线程
+    scheduler.scheduleUpdateGlobal(function()
+        	self:update()end,1000
+    )
 end
-
+function MainScene:update()
+    print(self.player:getRotation())
+end
 function MainScene:onEnter()
 end
 
